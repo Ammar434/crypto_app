@@ -31,9 +31,9 @@ class LoginForm extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {},
-              child: const Text(
+              child: Text(
                 "Forgot Password?",
-                style: TextStyle(color: Colors.white),
+                style: Theme.of(context).textTheme.headline2,
               ),
             ),
             const Spacer(flex: 2),

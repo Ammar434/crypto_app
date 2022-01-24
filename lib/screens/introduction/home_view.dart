@@ -1,7 +1,13 @@
+import 'package:crypto_app/screens/authentication/auth_screen.dart';
+import 'package:crypto_app/utils/colors.dart';
+import 'package:crypto_app/utils/constants.dart';
 import 'package:crypto_app/utils/globals.dart';
+import 'package:crypto_app/utils/introduction_card.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
+import 'home_card.dart';
 import 'home_model.dart';
 
 class AnimatedCircle extends AnimatedWidget {
@@ -173,8 +179,14 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                 if (animationController.status != AnimationStatus.forward) {
                   model.isToggled = !model.isToggled;
                   model.index++;
-                  if (model.index > 3) {
-                    model.index = 0;
+                  if (model.index >= introductionCardList.length) {
+                    animationController.forward();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AuthScreen(),
+                      ),
+                    );
                   }
                   pageController.animateToPage(model.index,
                       duration: const Duration(milliseconds: 500),
@@ -209,17 +221,10 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
             ignoring: true,
             child: PageView.builder(
               controller: pageController,
-              itemCount: 4,
+              itemCount: introductionCardList.length,
               itemBuilder: (context, index) {
-                return Center(
-                  child: Text(
-                    'Page ${index + 1}',
-                    style: TextStyle(
-                      color: index % 2 == 0 ? Global.mediumBlue : Global.white,
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
+                return HomeCard(
+                  index: index,
                 );
               },
             ),

@@ -2,13 +2,18 @@ import 'package:crypto_app/responsive/mobile_screen_layout.dart';
 import 'package:crypto_app/responsive/responsive_layout.dart';
 import 'package:crypto_app/responsive/web_screen_layout.dart';
 import 'package:crypto_app/screens/authentication/auth_screen.dart';
+import 'package:crypto_app/screens/home/home.dart';
+import 'package:crypto_app/screens/introduction/home_card.dart';
 import 'package:crypto_app/screens/introduction/home_model.dart';
+import 'package:crypto_app/screens/introduction/home_view.dart';
 import 'package:crypto_app/utils/colors.dart';
 import 'package:crypto_app/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  Get.put<MyDrawerController>(MyDrawerController());
   runApp(const MyApp());
 }
 
@@ -27,11 +32,15 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Crypto App',
-        theme: ThemeData.dark().copyWith(
+        theme: ThemeData.light().copyWith(
           backgroundColor: mobileBackgroundColor,
+          scaffoldBackgroundColor: mobileBackgroundColor,
+          textTheme: const TextTheme(
+            headline2: TextStyle(fontSize: 16.0, color: Colors.black),
+          ),
           inputDecorationTheme: InputDecorationTheme(
             filled: true,
-            fillColor: Colors.white38,
+            fillColor: Colors.black38,
             border: InputBorder.none,
             hintStyle: const TextStyle(color: Colors.white),
             contentPadding: EdgeInsets.symmetric(
@@ -40,7 +49,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        home: const AuthScreen(),
+        home: HomeView(),
       ),
     );
   }
