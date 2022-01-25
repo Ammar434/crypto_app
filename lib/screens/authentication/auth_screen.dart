@@ -50,6 +50,7 @@ class _AuthScreenState extends State<AuthScreen>
     final _size = MediaQuery.of(context).size;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: AnimatedBuilder(
         animation: _animationController,
         builder: (context, _) {

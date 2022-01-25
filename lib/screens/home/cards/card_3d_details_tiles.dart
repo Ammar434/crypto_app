@@ -2,8 +2,6 @@ import 'package:crypto_app/utils/cards.dart';
 import 'package:crypto_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 
-import 'card_3d_widget.dart';
-
 class Card3DDetailsTiles extends StatelessWidget {
   const Card3DDetailsTiles({
     Key? key,
@@ -44,47 +42,13 @@ class Card3DDetailsTiles extends StatelessWidget {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.star,
-                  color: thirdColor,
-                  size: starSize,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const Text(
-                          "Achat Prop Firm - ",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: primaryColor),
-                        ),
-                        Text(
-                          "${card.achatPropFirm}K",
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.black),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: size.width / 1.3,
-                      child: Text(
-                        "Remboursement du compte par le broker au premier retrait : valeur sur le site du broker choisi",
-                        maxLines: 3,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black54,
-                            fontSize: size.height / 60),
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
+          Card3dDetailTileWidget(
+            starSize: starSize,
+            card: card,
+            size: size,
+            text: "Achat Prop Firm - ",
+            optionalText:
+                "Remboursement du compte par le broker au premier retrait : valeur sur le site du broker choisi",
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -258,6 +222,69 @@ class Card3DDetailsTiles extends StatelessWidget {
               ],
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class Card3dDetailTileWidget extends StatelessWidget {
+  const Card3dDetailTileWidget({
+    Key? key,
+    required this.starSize,
+    required this.card,
+    required this.size,
+    required this.text,
+    this.optionalText = "",
+  }) : super(key: key);
+
+  final double starSize;
+  final Card3d card;
+  final Size size;
+  final String text;
+  final String optionalText;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          Icon(
+            Icons.star,
+            color: thirdColor,
+            size: starSize,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    text,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, color: primaryColor),
+                  ),
+                  Text(
+                    "${card.achatPropFirm}K",
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.black),
+                  ),
+                ],
+              ),
+              SizedBox(
+                width: size.width / 1.3,
+                child: Text(
+                  optionalText,
+                  maxLines: 3,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black54,
+                      fontSize: size.height / 60),
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );
