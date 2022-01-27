@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'colors.dart';
 
 class Global {
-  static const Color white = mobileBackgroundColor;
+  static const Color white = backgroundColor;
   static const Color mediumBlue = accentColor;
   static const List<Color> palette = [white, mediumBlue];
   static const double scale = 1;

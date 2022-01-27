@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "839477594977",
+    "project_id": "lifestyleacademy-dc33d",
+    "storage_bucket": "lifestyleacademy-dc33d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:839477594977:android:3f75364cc0e380b68b5320",
+        "android_client_info": {
+          "package_name": "com.ammar.crypto_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "839477594977-v7ru7oa0etjgbb2br1em0eb2cgc1pkjd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ammar.crypto_app",
+            "certificate_hash": "ff1a99bf75d67992b51c5d0df68637789b08bc00"
+          }
+        },
+        {
+          "client_id": "839477594977-t8uab4n000tbb6dduot756i0gp5jnl39.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzUGJtZaWoJ3DuYJ618OtNPalmM9Ypv38"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "839477594977-t8uab4n000tbb6dduot756i0gp5jnl39.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "839477594977-gp9oncjo0guo51ube7gcb35tae2hkf4f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ammar.cryptoApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

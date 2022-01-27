@@ -225,6 +225,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
               itemBuilder: (context, index) {
                 return HomeCard(
                   index: index,
+                  color: model.foreGroundColor,
                 );
               },
             ),

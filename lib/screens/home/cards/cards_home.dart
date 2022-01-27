@@ -1,3 +1,4 @@
+import 'package:crypto_app/utils/colors.dart';
 import 'package:crypto_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -18,13 +19,11 @@ class CardsHome extends StatelessWidget {
         title: const Text(
           "Lifestyle Academy",
           textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.black87,
-          ),
         ),
         leading: IconButton(
           icon: const Icon(Icons.menu),
           onPressed: onTap,
+          color: textColor,
         ),
       ),
       body: Column(

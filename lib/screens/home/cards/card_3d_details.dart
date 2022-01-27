@@ -13,14 +13,10 @@ class CardsDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final starSize = size.height / 30;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        iconTheme: const IconThemeData(
-          color: Colors.black,
-        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -34,8 +30,7 @@ class CardsDetails extends StatelessWidget {
                 child: SizedBox(
                   height: size.width / 2,
                   width: size.width / 2,
-                  child:
-                      Hero(tag: card.title, child: Card3dWidget(card: card)),
+                  child: Hero(tag: card.title, child: Card3dWidget(card: card)),
                 ),
               ),
               const SizedBox(
@@ -44,7 +39,7 @@ class CardsDetails extends StatelessWidget {
               Text(
                 card.title,
                 style: TextStyle(
-                  color: Colors.black87,
+                  color: accentColor,
                   fontWeight: FontWeight.bold,
                   fontSize: size.height / 30,
                 ),
@@ -63,8 +58,7 @@ class CardsDetails extends StatelessWidget {
             ],
           ),
           Expanded(
-            child: Card3DDetailsTiles(
-                size: size, starSize: starSize, card: card),
+            child: Card3DDetailsTiles(card: card),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: size.width / 5),

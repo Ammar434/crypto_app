@@ -7,7 +7,7 @@ class WebScreenLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Text("HellO"),
+        child: Text("Web screen"),
       ),
     );
   }

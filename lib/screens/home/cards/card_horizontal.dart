@@ -45,7 +45,7 @@ class _CardsHorizontalState extends State<CardsHorizontal>
                 "Benefices",
                 textAlign: TextAlign.left,
                 style: TextStyle(
-                  color: Colors.black54,
+                  color: textColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),

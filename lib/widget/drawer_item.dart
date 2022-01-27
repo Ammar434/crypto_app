@@ -8,10 +8,12 @@ class DrawerItem extends StatelessWidget {
     required this.text,
     required this.iconData,
     required this.press,
+    this.color = textColor,
   }) : super(key: key);
   final String text;
   final IconData iconData;
   final GestureTapCallback press;
+  final Color color;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -24,18 +26,19 @@ class DrawerItem extends StatelessWidget {
           children: [
             FaIcon(
               iconData,
-              color: primaryColor,
+              color: color,
               size: size.height / 30,
             ),
             SizedBox(
-              width: size.width / 50,
+              width: size.width / 40,
             ),
             Text(
               text,
               style: TextStyle(
-                  fontSize: size.height / 40,
-                  color: primaryColor,
-                  fontWeight: FontWeight.bold),
+                fontSize: size.height / 40,
+                color: color,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ],
         ),

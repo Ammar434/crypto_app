@@ -1,9 +1,15 @@
 import 'dart:math';
 
+import 'package:crypto_app/responsive/mobile_screen_layout.dart';
+import 'package:crypto_app/responsive/responsive_layout.dart';
+import 'package:crypto_app/responsive/size_config.dart';
+import 'package:crypto_app/responsive/web_screen_layout.dart';
+import 'package:crypto_app/ressources/auth_method.dart';
 import 'package:crypto_app/screens/authentication/sign_up_form.dart';
 import 'package:crypto_app/screens/home/home.dart';
 import 'package:crypto_app/utils/colors.dart';
 import 'package:crypto_app/utils/constants.dart';
+import 'package:crypto_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -19,8 +25,19 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen>
     with SingleTickerProviderStateMixin {
   bool _isShowSignUp = false;
+  bool _isLoading = false;
+
   late AnimationController _animationController;
   late Animation<double> _animationTextRotate;
+  late TextEditingController _emailController;
+  late TextEditingController _pwdController;
+  late TextEditingController _pwdConfirmController;
+  late TextEditingController _adressController;
+  late TextEditingController _numeroController;
+
+  late TextEditingController _emailControllerLogIn;
+
+  late TextEditingController _pwdControllerLogIn;
   @override
   void initState() {
     super.initState();
@@ -28,12 +45,27 @@ class _AuthScreenState extends State<AuthScreen>
         AnimationController(vsync: this, duration: defaultDuration);
     _animationTextRotate =
         Tween<double>(begin: 0, end: 90).animate(_animationController);
+    _emailController = TextEditingController();
+    _pwdController = TextEditingController();
+    _pwdConfirmController = TextEditingController();
+    _adressController = TextEditingController();
+    _numeroController = TextEditingController();
+    _emailControllerLogIn = TextEditingController();
+    _pwdControllerLogIn = TextEditingController();
   }
 
   @override
   void dispose() {
-    _animationController.dispose();
     super.dispose();
+
+    _animationController.dispose();
+    _emailController.dispose();
+    _pwdController.dispose();
+    _pwdConfirmController.dispose();
+    _adressController.dispose();
+    _numeroController.dispose();
+    _emailControllerLogIn.dispose();
+    _pwdControllerLogIn.dispose();
   }
 
   void updateView() {
@@ -43,6 +75,59 @@ class _AuthScreenState extends State<AuthScreen>
     _isShowSignUp
         ? _animationController.forward()
         : _animationController.reverse();
+  }
+
+  void signUpUser() async {
+    setState(
+      () {
+        _isLoading = true;
+      },
+    );
+    String res = await AuthMethods().signUpUser(
+      email: _emailController.text,
+      password: _pwdController.text,
+      address: _adressController.text,
+      phoneNumber: _numeroController.text,
+      passwordConfirm: _pwdConfirmController.text,
+    );
+    setState(
+      () {
+        _isLoading = false;
+      },
+    );
+    if (res != "success") {
+      showSnackBar(context, res);
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            mobileScreenLayout: MobileScreenLayout(),
+            webScreenLayout: WebScreenLayout(),
+          ),
+        ),
+      );
+    }
+  }
+
+  void loginUser() async {
+    String res = await AuthMethods().loginUser(
+      email: _emailControllerLogIn.text,
+      password: _pwdControllerLogIn.text,
+    );
+    if (res == "success") {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            mobileScreenLayout: MobileScreenLayout(),
+            webScreenLayout: WebScreenLayout(),
+          ),
+        ),
+      );
+    } else {
+      showSnackBar(context, res);
+    }
   }
 
   @override
@@ -62,8 +147,11 @@ class _AuthScreenState extends State<AuthScreen>
                 height: _size.height,
                 left: _isShowSignUp ? -_size.width * 0.76 : 0,
                 child: Container(
-                  color: mobileBackgroundColor,
-                  child: const LoginForm(),
+                  color: backgroundColor,
+                  child: LoginForm(
+                    pwdController: _pwdControllerLogIn,
+                    emailController: _emailControllerLogIn,
+                  ),
                 ),
               ),
               Positioned(
@@ -72,7 +160,13 @@ class _AuthScreenState extends State<AuthScreen>
                 left: _isShowSignUp ? _size.width * 0.12 : _size.width * 0.88,
                 child: Container(
                   color: accentColor,
-                  child: const SignUpForm(),
+                  child: SignUpForm(
+                    adressController: _adressController,
+                    emailController: _emailController,
+                    pwdController: _pwdController,
+                    pwdConfirmController: _pwdConfirmController,
+                    numeroController: _numeroController,
+                  ),
                 ),
               ),
               AnimatedPositioned(
@@ -82,14 +176,14 @@ class _AuthScreenState extends State<AuthScreen>
                 right: _isShowSignUp ? -_size.width * 0.06 : _size.width * 0.06,
                 child: CircleAvatar(
                   backgroundColor:
-                      _isShowSignUp ? accentColor : mobileBackgroundColor,
+                      _isShowSignUp ? accentColor : backgroundColor,
                   radius: 25,
                   child: AnimatedSwitcher(
                     duration: defaultDuration,
                     child: _isShowSignUp
                         ? SvgPicture.asset(
                             "assets/images/authentication/login-svgrepo-com.svg",
-                            color: mobileBackgroundColor,
+                            color: backgroundColor,
                           )
                         : SvgPicture.asset(
                             "assets/images/authentication/register-svgrepo-com.svg",
@@ -118,20 +212,20 @@ class _AuthScreenState extends State<AuthScreen>
                         if (_isShowSignUp) {
                           updateView();
                         } else {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => Home()));
-                          //Login
+                          loginUser();
                         }
                       },
                       child: Container(
                         padding: EdgeInsets.symmetric(
                           vertical: defaultPadding * 0.75,
                         ),
-                        width: 160,
+                        width: SizeConfig.widthMultiplier * 40,
                         child: Text(
                           "Log In".toUpperCase(),
                           textAlign: TextAlign.center,
-                          style: const TextStyle(color: Colors.black),
+                          style: _isShowSignUp
+                              ? const TextStyle(color: Colors.white54)
+                              : Theme.of(context).textTheme.headline1,
                         ),
                       ),
                     ),
@@ -141,7 +235,7 @@ class _AuthScreenState extends State<AuthScreen>
               AnimatedPositioned(
                 right: _isShowSignUp ? _size.width * 0.44 - 80 : 0,
                 bottom:
-                    !_isShowSignUp ? _size.height / 2 - 80 : _size.height * 0.3,
+                    !_isShowSignUp ? _size.height / 2 - 80 : _size.height * 0.1,
                 duration: defaultDuration,
                 child: AnimatedDefaultTextStyle(
                   duration: defaultDuration,
@@ -156,7 +250,7 @@ class _AuthScreenState extends State<AuthScreen>
                     child: InkWell(
                       onTap: () {
                         if (_isShowSignUp) {
-                          //Register
+                          signUpUser();
                         } else {
                           updateView();
                         }
@@ -165,7 +259,7 @@ class _AuthScreenState extends State<AuthScreen>
                         padding: EdgeInsets.symmetric(
                           vertical: defaultPadding * 0.75,
                         ),
-                        width: 160,
+                        width: SizeConfig.widthMultiplier * 40,
                         child: Text(
                           "Sign UP".toUpperCase(),
                           textAlign: TextAlign.center,

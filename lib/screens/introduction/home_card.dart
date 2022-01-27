@@ -1,3 +1,4 @@
+import 'package:crypto_app/responsive/size_config.dart';
 import 'package:crypto_app/utils/constants.dart';
 import 'package:crypto_app/utils/introduction_card.dart';
 import 'package:flutter/material.dart';
@@ -5,9 +6,11 @@ import 'package:lottie/lottie.dart';
 
 class HomeCard extends StatelessWidget {
   final int index;
+  final Color color;
   const HomeCard({
     Key? key,
     required this.index,
+    required this.color,
   }) : super(key: key);
 
   @override
@@ -34,10 +37,10 @@ class HomeCard extends StatelessWidget {
         ),
         Text(
           introductionCardList[index].text,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 16,
-            color: Colors.black,
+            fontSize: SizeConfig.heightMultiplier * 2,
+            color: color,
           ),
           textAlign: TextAlign.center,
         ),

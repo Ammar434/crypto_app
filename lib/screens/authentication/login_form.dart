@@ -1,9 +1,14 @@
+import 'package:crypto_app/widget/text_field_input.dart';
 import 'package:flutter/material.dart';
 
 class LoginForm extends StatelessWidget {
-  const LoginForm({
-    Key? key,
-  }) : super(key: key);
+  const LoginForm(
+      {Key? key, required this.emailController, required this.pwdController})
+      : super(key: key);
+
+  final TextEditingController emailController;
+
+  final TextEditingController pwdController;
 
   @override
   Widget build(BuildContext context) {
@@ -15,18 +20,20 @@ class LoginForm extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Spacer(),
-            TextFormField(
-              decoration: const InputDecoration(
-                hintText: "Email",
-              ),
+            TextFieldInput(
+              textEditingController: emailController,
+              hintText: "Email",
+              textInputType: TextInputType.emailAddress,
+              isSignUp: false,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
-              child: TextFormField(
-                obscureText: true,
-                decoration: const InputDecoration(
-                  hintText: "Password",
-                ),
+              child: TextFieldInput(
+                textEditingController: pwdController,
+                hintText: 'Password',
+                textInputType: TextInputType.text,
+                isPass: true,
+                isSignUp: false,
               ),
             ),
             TextButton(
