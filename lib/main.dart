@@ -4,6 +4,7 @@ import 'package:crypto_app/responsive/responsive_layout.dart';
 import 'package:crypto_app/responsive/size_config.dart';
 import 'package:crypto_app/responsive/web_screen_layout.dart';
 import 'package:crypto_app/screens/academy/academy_home.dart';
+import 'package:crypto_app/screens/academy/video_info.dart';
 import 'package:crypto_app/screens/home/home.dart';
 import 'package:crypto_app/screens/introduction/home_model.dart';
 import 'package:crypto_app/screens/introduction/home_view.dart';
@@ -75,7 +76,9 @@ class MyApp extends StatelessWidget {
                     ),
                   ),
                 ),
-                home: StreamBuilder(
+                home: const VideoInfo(),
+
+                /*StreamBuilder(
                   stream: FirebaseAuth.instance.authStateChanges(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.active) {
@@ -106,7 +109,7 @@ class MyApp extends StatelessWidget {
 
                     return const HomeView();
                   },
-                ),
+                ),*/
               );
             },
           );

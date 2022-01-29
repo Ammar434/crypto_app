@@ -10,6 +10,7 @@ class User {
   final bool specialUser;
   final String mt4Address;
   final String mt5Address;
+  final String propFirm;
   const User({
     required this.uid,
     required this.email,
@@ -20,6 +21,7 @@ class User {
     required this.specialUser,
     required this.mt4Address,
     required this.mt5Address,
+    required this.propFirm,
   });
 
   static User fromSnap(DocumentSnapshot snap) {
@@ -35,6 +37,7 @@ class User {
       specialUser: snapshot["specialUser"],
       mt4Address: snapshot["mt4Address"],
       mt5Address: snapshot["mt5Address"],
+      propFirm: snapshot["propFirm"],
     );
   }
 
@@ -48,5 +51,6 @@ class User {
         "specialUser": specialUser,
         "mt4Address": mt4Address,
         "mt5Address": mt5Address,
+        "propFirm": propFirm,
       };
 }

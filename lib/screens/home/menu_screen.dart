@@ -1,8 +1,8 @@
+import 'package:crypto_app/screens/academy/video_info.dart';
 import 'package:crypto_app/screens/informations/information_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_app/responsive/size_config.dart';
 import 'package:crypto_app/ressources/auth_method.dart';
-import 'package:crypto_app/screens/academy/academy_home.dart';
 import 'package:crypto_app/utils/colors.dart';
 import 'package:crypto_app/widget/drawer_item.dart';
 import 'package:crypto_app/widget/rounded_button.dart';
@@ -29,7 +29,7 @@ class MenuScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const AcademyHome(),
+                    builder: (context) => const VideoInfo(),
                   ),
                 );
               },

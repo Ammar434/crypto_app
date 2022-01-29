@@ -54,6 +54,7 @@ class AuthMethods {
           specialUser: false,
           mt4Address: "Non attribué",
           mt5Address: "Non attribué",
+          propFirm: "",
         );
 
         // adding user in our database

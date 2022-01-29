@@ -40,13 +40,16 @@ dependencies:
   flutter_zoom_drawer: ^2.2.2
   get: ^4.6.1
   font_awesome_flutter: ^9.2.0
-  better_player: ^0.0.81
+  video_player: ^2.1.1
+  animated_text_kit: ^4.2.1
+  chewie: ^1.2.2
 
   firebase: ^9.0.2
   cloud_firestore: ^3.1.6
   firebase_auth: ^3.3.5
   firebase_storage: ^10.2.5
   firebase_core: ^1.11.0
+  firebase_database: ^9.0.6
 
 
 dev_dependencies:
@@ -75,6 +78,7 @@ flutter:
   assets:
     - assets/images/authentication/
     - assets/images/home/
+    - json/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
