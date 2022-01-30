@@ -1,6 +1,5 @@
 import 'package:crypto_app/responsive/size_config.dart';
 import 'package:crypto_app/utils/cards.dart';
-import 'package:crypto_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 import 'card_3d_detail_tile_widget.dart';
@@ -37,7 +36,7 @@ class Card3DDetailsTiles extends StatelessWidget {
             optionalText: "Croissance garantie - Objectif Mensuel 6,5%",
           ),
           Card3dDetailTileWidget(
-            text1: "RENDEMENT PREVU - ",
+            text1: "Rendement prevu- ",
             text2: "${card.rendement} €",
             optionalText: "Montant après déduction de la comission du broker",
           ),

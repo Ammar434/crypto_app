@@ -1,10 +1,8 @@
 import 'package:crypto_app/screens/authentication/auth_screen.dart';
 import 'package:crypto_app/utils/colors.dart';
-import 'package:crypto_app/utils/constants.dart';
 import 'package:crypto_app/utils/globals.dart';
 import 'package:crypto_app/utils/introduction_card.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 import 'home_card.dart';
@@ -12,17 +10,17 @@ import 'home_model.dart';
 
 class AnimatedCircle extends AnimatedWidget {
   final Tween<double> tween;
-  final Tween<double> horizontalTween;
+  final Tween<double>? horizontalTween;
   final Animation<double> animation;
-  final Animation<double> horizontalAnimation;
+  final Animation<double>? horizontalAnimation;
   final double flip;
   final Color color;
 
   const AnimatedCircle({
     Key? key,
     required this.animation,
-    required this.horizontalTween,
-    required this.horizontalAnimation,
+    this.horizontalTween,
+    this.horizontalAnimation,
     required this.color,
     required this.flip,
     required this.tween,
@@ -43,7 +41,7 @@ class AnimatedCircle extends AnimatedWidget {
         transform: Matrix4.identity()
           ..translate(
             horizontalTween != null
-                ? horizontalTween.evaluate(horizontalAnimation)
+                ? horizontalTween?.evaluate(horizontalAnimation!)
                 : 0.0,
           ),
         child: Container(
@@ -75,8 +73,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
   late AnimationController animationController;
-  late AnimationController garbageAnimationController;
-  late Animation<double> garbageAnimation;
+
   late Animation<double> startAnimation;
   late Animation<double> endAnimation;
   late Animation<double> horizontalAnimation;
@@ -132,18 +129,6 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
           }
         },
       );
-    garbageAnimationController = AnimationController(
-      duration: const Duration(milliseconds: 0),
-      vsync: this,
-    );
-    garbageAnimation = CurvedAnimation(
-      parent: garbageAnimationController,
-      curve: const Interval(
-        0,
-        0,
-        curve: Curves.easeInQuad,
-      ),
-    );
   }
 
   @override
@@ -201,8 +186,6 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                     color: model.foreGroundColor,
                     flip: 1.0,
                     tween: Tween<double>(begin: 1.0, end: Global.radius),
-                    horizontalTween: Tween<double>(begin: 0, end: 0),
-                    horizontalAnimation: garbageAnimation,
                   ),
                   AnimatedCircle(
                     animation: endAnimation,
@@ -225,7 +208,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
               itemBuilder: (context, index) {
                 return HomeCard(
                   index: index,
-                  color: model.foreGroundColor,
+                  color: textColor,
                 );
               },
             ),

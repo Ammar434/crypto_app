@@ -1,13 +1,5 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:crypto_app/models/users.dart';
-import 'package:crypto_app/providers/user_provider.dart';
 import 'package:crypto_app/responsive/size_config.dart';
-import 'package:crypto_app/utils/colors.dart';
-import 'package:crypto_app/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:lottie/lottie.dart';
-import 'package:provider/provider.dart';
 
 import 'card_academy_presentation.dart';
 import 'level_card.dart';
@@ -35,7 +27,7 @@ class _AcademyHomeState extends State<AcademyHome> {
         width: SizeConfig.widthMultiplier * 100,
         child: ListView(
           children: [
-            CardAcademyPresentation(),
+            const CardAcademyPresentation(),
             Padding(
               padding: EdgeInsets.only(left: SizeConfig.widthMultiplier * 5),
               child: Text(

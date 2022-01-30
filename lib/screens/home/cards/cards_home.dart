@@ -1,13 +1,13 @@
 import 'package:crypto_app/utils/colors.dart';
 import 'package:crypto_app/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 
 import 'card_horizontal.dart';
 import 'cards_body.dart';
 
 class CardsHome extends StatelessWidget {
-  final GestureTapCallback onTap;
-  const CardsHome({Key? key, required this.onTap}) : super(key: key);
+  const CardsHome({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +22,10 @@ class CardsHome extends StatelessWidget {
         ),
         leading: IconButton(
           icon: const Icon(Icons.menu),
-          onPressed: onTap,
           color: textColor,
+          onPressed: () {
+            ZoomDrawer.of(context)?.toggle.call();
+          },
         ),
       ),
       body: Column(

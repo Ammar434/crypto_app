@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:crypto_app/models/users.dart" as model;
 import 'package:firebase_auth/firebase_auth.dart';
@@ -43,18 +41,20 @@ class AuthMethods {
           email: email,
           password: password,
         );
-
+        DateTime dateToday = DateTime.now();
+        String date = dateToday.toString().substring(0, 10);
         model.User _user = model.User(
           uid: cred.user!.uid,
           email: email,
           dayLeft: "0",
-          level: "0",
+          level: "1",
           address: address,
           phoneNumber: phoneNumber,
           specialUser: false,
           mt4Address: "Non attribué",
           mt5Address: "Non attribué",
           propFirm: "",
+          dateJoined: date,
         );
 
         // adding user in our database

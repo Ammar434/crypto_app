@@ -1,13 +1,12 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:crypto_app/models/users.dart';
 import 'package:crypto_app/providers/user_provider.dart';
 import 'package:crypto_app/responsive/size_config.dart';
 import 'package:crypto_app/screens/academy/video_info.dart';
 import 'package:crypto_app/utils/colors.dart';
 import 'package:crypto_app/utils/constants.dart';
+import 'package:crypto_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class LevelCard extends StatelessWidget {
@@ -18,8 +17,11 @@ class LevelCard extends StatelessWidget {
   final int levelId;
   @override
   Widget build(BuildContext context) {
-    // User user = Provider.of<UserProvider>(context).getUser;
+    User user = Provider.of<UserProvider>(context).getUser;
     bool _isAccessible = false;
+    if (double.parse(user.level) >= levelId) {
+      _isAccessible = true;
+    }
 
     return InkWell(
       onTap: () {
@@ -27,10 +29,11 @@ class LevelCard extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const VideoInfo(),
+              builder: (context) => VideoInfo(level: levelId),
             ),
           );
         }
+        else{showSnackBar(context, "Niveau non débloqué veuillez prendre conctact avec notre équipe");}
       },
       child: Container(
         width: SizeConfig.widthMultiplier * 40,

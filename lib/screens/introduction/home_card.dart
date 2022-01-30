@@ -2,7 +2,6 @@ import 'package:crypto_app/responsive/size_config.dart';
 import 'package:crypto_app/utils/constants.dart';
 import 'package:crypto_app/utils/introduction_card.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 
 class HomeCard extends StatelessWidget {
   final int index;
@@ -17,10 +16,8 @@ class HomeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const SizedBox(
-          height: 200,
-        ),
         Container(
           height: 250,
           margin: EdgeInsets.symmetric(horizontal: defaultPadding * 3),
@@ -30,7 +27,7 @@ class HomeCard extends StatelessWidget {
             ),
             //color: thirdColor,
           ),
-          child: Lottie.network(introductionCardList[index].image),
+          child: Image.asset(introductionCardList[index].image),
         ),
         SizedBox(
           height: defaultPadding,

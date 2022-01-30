@@ -1,5 +1,4 @@
 import 'package:crypto_app/responsive/size_config.dart';
-import 'package:crypto_app/utils/cards.dart';
 import 'package:crypto_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -34,9 +33,10 @@ class Card3dDetailTileWidget extends StatelessWidget {
                   Text(
                     text1,
                     style: TextStyle(
-                        fontSize: SizeConfig.heightMultiplier * 2.2,
-                        fontWeight: FontWeight.bold,
-                        color: primaryColor),
+                      fontSize: SizeConfig.heightMultiplier * 2.2,
+                      fontWeight: FontWeight.bold,
+                      color: textColor,
+                    ),
                   ),
                   Text(
                     text2,
@@ -53,7 +53,7 @@ class Card3dDetailTileWidget extends StatelessWidget {
                     maxLines: 3,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: hintColor,
                         fontSize: SizeConfig.heightMultiplier * 1.9),
                   ),
                 ),

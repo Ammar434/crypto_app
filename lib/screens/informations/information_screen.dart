@@ -1,5 +1,8 @@
 import 'package:crypto_app/models/users.dart';
 import 'package:crypto_app/providers/user_provider.dart';
+import 'package:crypto_app/responsive/size_config.dart';
+import 'package:crypto_app/utils/colors.dart';
+import 'package:crypto_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,9 +12,60 @@ class InformationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     User user = Provider.of<UserProvider>(context).getUser;
-    debugPrint(user.email);
+
     return Scaffold(
-      body: Column(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        title: const Text("Informations"),
+      ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: SizeConfig.widthMultiplier * 10,
+          vertical: SizeConfig.heightMultiplier * 5,
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(defaultRadius),
+            color: accentColor,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              InformationTileWidget(
+                title: 'Adresse e-mail',
+                text: user.email,
+              ),
+              InformationTileWidget(
+                title: 'Adresse MT4',
+                text: user.mt4Address,
+              ),
+              InformationTileWidget(
+                title: 'Adresse MT5',
+                text: user.mt5Address,
+              ),
+              InformationTileWidget(
+                title: "Jour restant à l'Academy",
+                text: user.dayLeft,
+              ),
+              InformationTileWidget(
+                title: "Adresse",
+                text: user.address,
+              ),
+              InformationTileWidget(
+                title: "Numero",
+                text: user.phoneNumber,
+              ),
+              InformationTileWidget(
+                title: "Joined",
+                text: user.dateJoined,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    /*Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(user.email),
@@ -20,6 +74,55 @@ class InformationScreen extends StatelessWidget {
           Text(user.mt4Address),
           Text(user.mt5Address),
           Text(user.level)
+        ],
+      ),
+    );*/
+  }
+}
+
+class InformationTileWidget extends StatelessWidget {
+  const InformationTileWidget({
+    Key? key,
+    required this.title,
+    required this.text,
+  }) : super(key: key);
+
+  final String title;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(SizeConfig.widthMultiplier * 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: SizeConfig.heightMultiplier * 2.2,
+              fontWeight: FontWeight.w500,
+              color: Colors.white70,
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: Colors.white70,
+                  width: 2,
+                ),
+              ),
+            ),
+            child: Text(
+              text,
+              style: TextStyle(
+                fontSize: SizeConfig.heightMultiplier * 2.2,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
         ],
       ),
     );

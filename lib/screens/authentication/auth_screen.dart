@@ -6,7 +6,6 @@ import 'package:crypto_app/responsive/size_config.dart';
 import 'package:crypto_app/responsive/web_screen_layout.dart';
 import 'package:crypto_app/ressources/auth_method.dart';
 import 'package:crypto_app/screens/authentication/sign_up_form.dart';
-import 'package:crypto_app/screens/home/home.dart';
 import 'package:crypto_app/utils/colors.dart';
 import 'package:crypto_app/utils/constants.dart';
 import 'package:crypto_app/utils/utils.dart';
@@ -135,6 +134,7 @@ class _AuthScreenState extends State<AuthScreen>
     final _size = MediaQuery.of(context).size;
 
     return Scaffold(
+      backgroundColor: accentColor,
       resizeToAvoidBottomInset: false,
       body: AnimatedBuilder(
         animation: _animationController,
@@ -155,7 +155,9 @@ class _AuthScreenState extends State<AuthScreen>
                 ),
               ),
               Positioned(
-                height: _size.height,
+                height: MediaQuery.of(context).viewInsets.bottom != 0
+                    ? _size.height / 1.3
+                    : _size.height,
                 width: _size.width * 0.88,
                 left: _isShowSignUp ? _size.width * 0.12 : _size.width * 0.88,
                 child: Container(
@@ -183,7 +185,7 @@ class _AuthScreenState extends State<AuthScreen>
                     child: _isShowSignUp
                         ? SvgPicture.asset(
                             "assets/images/authentication/login-svgrepo-com.svg",
-                            color: backgroundColor,
+                            color: textColor,
                           )
                         : SvgPicture.asset(
                             "assets/images/authentication/register-svgrepo-com.svg",

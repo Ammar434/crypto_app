@@ -6,13 +6,8 @@ class IntroductionCard {
 }
 
 List<IntroductionCard> introductionCardList = [
-  IntroductionCard(
-      "https://assets8.lottiefiles.com/packages/lf20_ikaawl5v.json",
+  IntroductionCard("assets/images/introduction/lifestyle_logo_black.png",
       "Lorem ipsum dolor sit amet, consectetur "),
-  IntroductionCard(
-      "https://assets4.lottiefiles.com/packages/lf20_yc9ywdm7.json",
+  IntroductionCard("assets/images/introduction/lifestyle_logo_white.png",
       "Lorem ipsum dolor sit amet, consectetur"),
-  IntroductionCard(
-      "https://assets3.lottiefiles.com/packages/lf20_8wuout7s.json",
-      "Lorem ipsum dolor sit amet, consectetur "),
 ];

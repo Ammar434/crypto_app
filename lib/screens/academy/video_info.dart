@@ -1,17 +1,17 @@
+import 'package:chewie/chewie.dart';
 import 'package:crypto_app/models/video_model.dart';
 import 'package:crypto_app/responsive/size_config.dart';
 import 'package:crypto_app/ressources/video_method.dart';
 import 'package:crypto_app/screens/academy/playlist_tile_widget.dart';
 import 'package:crypto_app/utils/colors.dart';
 import 'package:crypto_app/utils/constants.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoInfo extends StatefulWidget {
-  const VideoInfo({Key? key}) : super(key: key);
+  const VideoInfo({Key? key, required this.level}) : super(key: key);
+  final int level;
 
   @override
   _VideoInfoState createState() => _VideoInfoState();
@@ -21,15 +21,16 @@ class _VideoInfoState extends State<VideoInfo> {
   late String title;
   late int itemCount;
   bool isLoading = false;
-  bool isPlaying = true;
+  bool isPlaying = false;
   bool isDisposed = false;
-  late VideoPlayerController _videoPlayerController;
+  VideoPlayerController? _videoPlayerController;
+  ChewieController? chewieController;
 
   @override
   void initState() {
     super.initState();
     _initData();
-    _videoPlayerController = VideoPlayerController.network("");
+
     //_onTapVideo(-1);
   }
 
@@ -37,49 +38,34 @@ class _VideoInfoState extends State<VideoInfo> {
     setState(() {
       isLoading = true;
     });
-    title = await VideoMethod.getLevelTitle(level: 0);
+    title = await VideoMethod.getLevelTitle(level: widget.level);
+    _videoPlayerController = VideoPlayerController.network("");
 
     setState(() {
       isLoading = false;
     });
   }
 
-  _onTapVideo(String videoUrl) {
-    final controller = VideoPlayerController.network(videoUrl);
-    final old = _videoPlayerController;
-    _videoPlayerController = controller;
-    if (old != null) {
-      old.removeListener(() {
-        _onControllerUpdate();
-        old.pause();
-      });
-    }
-    setState(() {});
-    controller.initialize().then(
-      (value) {
-        old.dispose();
-        controller.addListener(() {
-          _onControllerUpdate;
-        });
-        controller.play();
-        setState(() {});
-      },
-    );
-  }
+  _onTapVideo(String videoUrl) async {
+    _videoPlayerController = VideoPlayerController.network(videoUrl);
+    await _videoPlayerController?.initialize();
 
-  void _onControllerUpdate() async {
-    if (isDisposed) {
-      return;
-    }
-    isPlaying = _videoPlayerController.value.isPlaying;
+    ChewieController(videoPlayerController: _videoPlayerController!);
+
+    setState(() {});
   }
 
   Widget _playView(BuildContext context) {
-    final controller = _videoPlayerController;
-    if (controller.value.isInitialized) {
+    if (_videoPlayerController!.value.isInitialized) {
+      setState(() {
+        chewieController =
+            ChewieController(videoPlayerController: _videoPlayerController!);
+      });
       return AspectRatio(
         aspectRatio: 16 / 9,
-        child: VideoPlayer(controller),
+        child: Chewie(
+          controller: chewieController!,
+        ),
       );
     }
     return AspectRatio(
@@ -93,8 +79,9 @@ class _VideoInfoState extends State<VideoInfo> {
   @override
   void dispose() {
     isDisposed = true;
-    _videoPlayerController.pause();
-    _videoPlayerController.dispose();
+    _videoPlayerController?.pause();
+    _videoPlayerController?.dispose();
+    chewieController?.dispose();
     super.dispose();
   }
 
@@ -104,7 +91,6 @@ class _VideoInfoState extends State<VideoInfo> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        leading: const Icon(Icons.arrow_back),
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator.adaptive())
@@ -114,7 +100,7 @@ class _VideoInfoState extends State<VideoInfo> {
                 height: SizeConfig.heightMultiplier * 100,
                 child: Column(
                   children: [
-                    buildTop(context),
+                    _playView(context),
                     SizedBox(
                       height: defaultPadding,
                     ),
@@ -123,67 +109,6 @@ class _VideoInfoState extends State<VideoInfo> {
                 ),
               ),
             ),
-    );
-  }
-
-  Column buildTop(BuildContext context) {
-    return Column(
-      children: [
-        _playView(context),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextButton(
-              onPressed: () {
-                isPlaying
-                    ? _videoPlayerController.pause()
-                    : _videoPlayerController.play();
-              },
-              child: const FaIcon(
-                FontAwesomeIcons.backward,
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                if (isPlaying) {
-                  setState(
-                    () {
-                      isPlaying = false;
-                    },
-                  );
-                  _videoPlayerController.pause();
-                } else {
-                  setState(
-                    () {
-                      isPlaying = true;
-                    },
-                  );
-                  _videoPlayerController.play();
-                }
-              },
-              child: FaIcon(
-                isPlaying ? FontAwesomeIcons.pause : FontAwesomeIcons.play,
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                isPlaying
-                    ? _videoPlayerController.pause()
-                    : _videoPlayerController.play();
-              },
-              child: const FaIcon(
-                FontAwesomeIcons.forward,
-              ),
-            ),
-            TextButton(
-              onPressed: () {},
-              child: const FaIcon(
-                FontAwesomeIcons.expand,
-              ),
-            )
-          ],
-        )
-      ],
     );
   }
 
@@ -213,7 +138,7 @@ class _VideoInfoState extends State<VideoInfo> {
             ),
             Expanded(
               child: FutureBuilder(
-                future: VideoMethod.getVideoFromLevel(level: 0),
+                future: VideoMethod.getVideoFromLevel(level: widget.level),
                 builder:
                     (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                   if (!snapshot.hasData) {
