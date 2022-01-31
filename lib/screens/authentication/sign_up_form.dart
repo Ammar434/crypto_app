@@ -37,6 +37,7 @@ class SignUpForm extends StatelessWidget {
               child: TextFieldInput(
                 isSignUp: true,
                 textEditingController: pwdController,
+                isPass: true,
                 hintText: "Password",
                 textInputType: TextInputType.text,
               ),
@@ -45,6 +46,7 @@ class SignUpForm extends StatelessWidget {
               isSignUp: true,
               textEditingController: pwdConfirmController,
               hintText: "Confirm Password",
+              isPass: true,
               textInputType: TextInputType.emailAddress,
             ),
             Padding(

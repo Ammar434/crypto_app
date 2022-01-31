@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
               SizeConfig().init(constraints, orientation);
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
-                title: 'Crypto App',
+                title: 'Lifestyle Academy',
                 theme: ThemeData.dark().copyWith(
                   backgroundColor: backgroundColor,
                   scaffoldBackgroundColor: backgroundColor,
