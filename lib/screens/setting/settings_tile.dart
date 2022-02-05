@@ -10,7 +10,7 @@ class SettingsTile extends StatelessWidget {
     required this.icon,
     required this.iconBackgroundColor,
     required this.text1,
-    required this.text2,
+    this.text2 = "",
     required this.press,
   }) : super(key: key);
   final IconData icon;
@@ -32,7 +32,7 @@ class SettingsTile extends StatelessWidget {
             CircleAvatar(
               child: Icon(
                 icon,
-                color: primaryColor,
+                color: textColor,
               ),
               backgroundColor: iconBackgroundColor,
             ),

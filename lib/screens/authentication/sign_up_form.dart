@@ -27,7 +27,7 @@ class SignUpForm extends StatelessWidget {
           children: [
             const Spacer(),
             TextFieldInput(
-              isSignUp: true,
+              isPassword: false,
               textEditingController: emailController,
               hintText: "Email",
               textInputType: TextInputType.emailAddress,
@@ -35,34 +35,32 @@ class SignUpForm extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(vertical: defaultPadding),
               child: TextFieldInput(
-                isSignUp: true,
+                isPassword: true,
                 textEditingController: pwdController,
-                isPass: true,
                 hintText: "Password",
-                textInputType: TextInputType.text,
+                textInputType: TextInputType.visiblePassword,
               ),
             ),
             TextFieldInput(
-              isSignUp: true,
+              isPassword: true,
               textEditingController: pwdConfirmController,
               hintText: "Confirm Password",
-              isPass: true,
-              textInputType: TextInputType.emailAddress,
+              textInputType: TextInputType.visiblePassword,
             ),
             Padding(
               padding: EdgeInsets.symmetric(vertical: defaultPadding),
               child: TextFieldInput(
-                isSignUp: true,
+                isPassword: false,
                 textEditingController: adressController,
                 hintText: "Enter your adress",
-                textInputType: TextInputType.emailAddress,
+                textInputType: TextInputType.streetAddress,
               ),
             ),
             TextFieldInput(
-              isSignUp: true,
+              isPassword: false,
               textEditingController: numeroController,
               hintText: "Enter your phone number",
-              textInputType: TextInputType.emailAddress,
+              textInputType: TextInputType.phone,
             ),
             const Spacer(flex: 1)
           ],

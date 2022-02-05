@@ -1,44 +1,51 @@
+import 'package:crypto_app/models/users.dart';
+import 'package:crypto_app/providers/user_provider.dart';
 import 'package:crypto_app/responsive/size_config.dart';
 import 'package:crypto_app/screens/academy/academy_home.dart';
-import 'package:crypto_app/screens/documents/document_screen.dart';
+import 'package:crypto_app/screens/call_history/call_history_screen.dart';
 import 'package:crypto_app/screens/evolution/evolution_screen.dart';
-import 'package:crypto_app/screens/facture/facture_screen.dart';
 import 'package:crypto_app/screens/informations/information_screen.dart';
-import 'package:crypto_app/screens/setting_screen/setting_screen.dart';
+import 'package:crypto_app/screens/level/niveau_screen.dart';
+import 'package:crypto_app/screens/setting/setting_screen.dart';
+import 'package:crypto_app/screens/special_user/special_user.dart';
 import 'package:crypto_app/utils/colors.dart';
-import 'package:crypto_app/utils/constants.dart';
 import 'package:crypto_app/widget/drawer_item.dart';
+import 'package:crypto_app/widget/social_row.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
+    User user = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
           color: primaryColor,
           height: SizeConfig.heightMultiplier * 100,
-          padding: const EdgeInsets.symmetric(vertical: 100),
+          padding: EdgeInsets.symmetric(
+            vertical: SizeConfig.heightMultiplier * 10,
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              DrawerItem(
-                text: "Academy",
-                iconData: FontAwesomeIcons.video,
-                press: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const AcademyHome(),
-                    ),
-                  );
-                },
-              ),
+              if (user.specialUser == true)
+                DrawerItem(
+                  text: "VIP",
+                  iconData: FontAwesomeIcons.solidStar,
+                  press: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SpecialUser(),
+                      ),
+                    );
+                  },
+                ),
               DrawerItem(
                 text: "Mes informations",
                 iconData: FontAwesomeIcons.userAlt,
@@ -52,38 +59,53 @@ class MenuScreen extends StatelessWidget {
                 },
               ),
               DrawerItem(
-                  text: "Mes factures",
-                  iconData: FontAwesomeIcons.moneyBill,
-                  press: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const FactureScreen(),
-                      ),
-                    );
-                  }),
+                text: "Academy",
+                iconData: FontAwesomeIcons.video,
+                press: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AcademyHome(),
+                    ),
+                  );
+                },
+              ),
               DrawerItem(
-                  text: "Mes documents",
-                  iconData: FontAwesomeIcons.idCardAlt,
-                  press: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const DocumentScreen(),
-                      ),
-                    );
-                  }),
+                text: "Nos calls",
+                iconData: FontAwesomeIcons.bitcoin,
+                press: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CallHistoryScreen(),
+                    ),
+                  );
+                },
+              ),
               DrawerItem(
-                  text: "Mon évolution",
-                  iconData: FontAwesomeIcons.chartLine,
-                  press: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const EvolutionScreen(),
-                      ),
-                    );
-                  }),
+                text: "Mon evolution",
+                iconData: FontAwesomeIcons.solidChartBar,
+                press: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const EvolutionScreen(),
+                    ),
+                  );
+                },
+              ),
+              DrawerItem(
+                text: "Mon niveau",
+                iconData: FontAwesomeIcons.superpowers,
+                press: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LevelScreen(),
+                    ),
+                  );
+                },
+              ),
               DrawerItem(
                 text: "Parametres",
                 iconData: FontAwesomeIcons.cog,
@@ -96,39 +118,7 @@ class MenuScreen extends StatelessWidget {
                   );
                 },
               ),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: size.height / 80,
-                ),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(defaultPadding),
-                      child: FaIcon(
-                        FontAwesomeIcons.instagram,
-                        color: Colors.red,
-                        size: size.height / 25,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(defaultPadding),
-                      child: FaIcon(
-                        FontAwesomeIcons.telegram,
-                        color: const Color(0xFF2AABEE),
-                        size: size.height / 25,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(defaultPadding),
-                      child: FaIcon(
-                        FontAwesomeIcons.discord,
-                        color: const Color(0xFF7289da),
-                        size: size.height / 25,
-                      ),
-                    ),
-                  ],
-                ),
-              )
+              const SocialRow(),
             ],
           ),
         ),

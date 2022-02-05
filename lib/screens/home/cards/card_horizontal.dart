@@ -1,3 +1,4 @@
+import 'package:crypto_app/responsive/size_config.dart';
 import 'package:crypto_app/utils/colors.dart';
 import 'package:crypto_app/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -41,13 +42,13 @@ class _CardsHorizontalState extends State<CardsHorizontal>
           children: [
             Padding(
               padding: EdgeInsets.all(defaultPadding),
-              child: const Text(
+              child: Text(
                 "Benefices",
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   color: textColor,
                   fontWeight: FontWeight.bold,
-                  fontSize: 18,
+                  fontSize: SizeConfig.heightMultiplier * 3,
                 ),
               ),
             ),
@@ -64,12 +65,14 @@ class _CardsHorizontalState extends State<CardsHorizontal>
                   border: Border.all(color: accentColor, width: 5),
                 ),
                 child: Center(
-                  child: Text(
-                    _animation.value.toStringAsFixed(0) + " €",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      fontSize: 30,
+                  child: FittedBox(
+                    child: Text(
+                      _animation.value.toStringAsFixed(0) + " €",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: SizeConfig.heightMultiplier * 4,
+                      ),
                     ),
                   ),
                 ),

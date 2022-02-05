@@ -7,14 +7,14 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'menu_screen.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
   @override
-  _HomeScreenState createState() => new _HomeScreenState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
   final _drawerController = ZoomDrawerController();
-
-  int _currentPage = 0;
 
   @override
   Widget build(BuildContext context) {

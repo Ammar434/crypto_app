@@ -3,7 +3,6 @@ import 'package:crypto_app/models/video_model.dart';
 import 'package:crypto_app/responsive/size_config.dart';
 import 'package:crypto_app/ressources/video_method.dart';
 import 'package:crypto_app/screens/academy/playlist_tile_widget.dart';
-import 'package:crypto_app/utils/colors.dart';
 import 'package:crypto_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -94,79 +93,60 @@ class _VideoInfoState extends State<VideoInfo> {
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator.adaptive())
-          : SingleChildScrollView(
-              child: SizedBox(
-                width: SizeConfig.widthMultiplier * 100,
-                height: SizeConfig.heightMultiplier * 100,
-                child: Column(
-                  children: [
-                    _playView(context),
-                    SizedBox(
-                      height: defaultPadding,
+          : SizedBox(
+              width: SizeConfig.widthMultiplier * 100,
+              height: SizeConfig.heightMultiplier * 100,
+              child: ListView(
+                children: [
+                  _playView(context),
+                  SizedBox(
+                    height: defaultPadding,
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: SizeConfig.heightMultiplier * 2.6,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    Expanded(child: buildBottom()),
-                  ],
-                ),
-              ),
-            ),
-    );
-  }
-
-  Container buildBottom() {
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(70),
-        ),
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(defaultPadding),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: SizeConfig.heightMultiplier * 2.6,
-                fontWeight: FontWeight.bold,
-                color: backgroundColor,
-              ),
-            ),
-            SizedBox(
-              height: SizeConfig.heightMultiplier * 2,
-            ),
-            Expanded(
-              child: FutureBuilder(
-                future: VideoMethod.getVideoFromLevel(level: widget.level),
-                builder:
-                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                  if (!snapshot.hasData) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else {
-                    return ListView.builder(
-                      itemCount: snapshot.data.length,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        VideoModel videoModel =
-                            VideoModel.fromJson(snapshot.data, index);
-                        return PlaylistTileWidget(
-                          videoModel: videoModel,
-                          onTap: () {
-                            _onTapVideo(videoModel.videoUrl);
-                          },
+                  ),
+                  SizedBox(
+                    height: SizeConfig.heightMultiplier * 2,
+                  ),
+                  FutureBuilder(
+                    future: VideoMethod.getVideoFromLevel(level: widget.level),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<dynamic> snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
                         );
-                      },
-                    );
-                  }
-                },
+                      }
+                      return Column(
+                        children: List.generate(
+                          snapshot.data.length,
+                          (index) {
+                            VideoModel videoModel =
+                                VideoModel.fromJson(snapshot.data, index);
+                            return PlaylistTileWidget(
+                              videoModel: videoModel,
+                              onTap: () {
+                                _videoPlayerController?.pause();
+
+                                _onTapVideo(videoModel.videoUrl);
+                              },
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                  // Expanded(child: buildBottom()),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
     );
   }
 }

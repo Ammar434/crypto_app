@@ -4,13 +4,12 @@ class User {
   final String email;
   final String uid;
   final String level;
-  final String dayLeft;
+  final int dayLeft;
   final String address;
   final String phoneNumber;
   final bool specialUser;
-  final String mt4Address;
-  final String mt5Address;
-  final String propFirm;
+  final int numberPackBuy;
+
   final String dateJoined;
   const User({
     required this.uid,
@@ -20,10 +19,8 @@ class User {
     required this.address,
     required this.phoneNumber,
     required this.specialUser,
-    required this.mt4Address,
-    required this.mt5Address,
-    required this.propFirm,
     required this.dateJoined,
+    required this.numberPackBuy,
   });
 
   static User fromSnap(DocumentSnapshot snap) {
@@ -37,10 +34,8 @@ class User {
         address: snapshot["address"],
         phoneNumber: snapshot["phoneNumber"],
         specialUser: snapshot["specialUser"],
-        mt4Address: snapshot["mt4Address"],
-        mt5Address: snapshot["mt5Address"],
-        propFirm: snapshot["propFirm"],
-        dateJoined: snapshot["dateJoined"]);
+        dateJoined: snapshot["dateJoined"],
+        numberPackBuy: snapshot["numberPackBuy"]);
   }
 
   Map<String, dynamic> toJson() => {
@@ -51,9 +46,7 @@ class User {
         "address": address,
         "phoneNumber": phoneNumber,
         "specialUser": specialUser,
-        "mt4Address": mt4Address,
-        "mt5Address": mt5Address,
-        "propFirm": propFirm,
         "dateJoined": dateJoined,
+        "numberPackBuy": numberPackBuy,
       };
 }

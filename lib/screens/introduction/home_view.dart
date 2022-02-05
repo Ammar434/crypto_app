@@ -1,11 +1,15 @@
+import 'package:chewie/chewie.dart';
+import 'package:crypto_app/responsive/size_config.dart';
 import 'package:crypto_app/screens/authentication/auth_screen.dart';
+import 'package:crypto_app/screens/introduction/home_card.dart';
 import 'package:crypto_app/utils/colors.dart';
 import 'package:crypto_app/utils/globals.dart';
 import 'package:crypto_app/utils/introduction_card.dart';
+import 'package:crypto_app/utils/url.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:video_player/video_player.dart';
 
-import 'home_card.dart';
 import 'home_model.dart';
 
 class AnimatedCircle extends AnimatedWidget {
@@ -78,10 +82,17 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
   late Animation<double> endAnimation;
   late Animation<double> horizontalAnimation;
   late PageController pageController;
+  late VideoPlayerController videoPlayerController;
+  bool _isLoading = false;
+  ChewieController? chewieController;
 
   @override
   void initState() {
     super.initState();
+    setState(() {
+      _isLoading = true;
+    });
+    initVideo();
     pageController = PageController();
     animationController = AnimationController(
       vsync: this,
@@ -129,12 +140,31 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
           }
         },
       );
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
   void dispose() {
     animationController.dispose();
+    videoPlayerController.dispose();
+    chewieController?.pause();
+    chewieController?.dispose();
     super.dispose();
+  }
+
+  void initVideo() async {
+    videoPlayerController =
+        VideoPlayerController.network(lifestyleAcademyPresentationVideo);
+    await videoPlayerController.initialize();
+    chewieController = ChewieController(
+      videoPlayerController: videoPlayerController,
+      autoPlay: false,
+      showControls: false,
+    );
+
+    setState(() {});
   }
 
   @override
@@ -145,76 +175,89 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
     return Scaffold(
       backgroundColor:
           model.isHalfWay ? model.foreGroundColor : model.backGroundColor,
-      body: Stack(
-        children: [
-          Container(
-            color:
-                model.isHalfWay ? model.foreGroundColor : model.backGroundColor,
-            width: screenWidth / 2.0 - Global.radius / 2.0,
-            height: double.infinity,
-          ),
-          Transform(
-            transform: Matrix4.identity()
-              ..translate(
-                screenWidth / 2 - Global.radius / 2.0,
-                screenHeight - Global.radius - Global.bottomPadding,
-              ),
-            child: GestureDetector(
-              onTap: () {
-                if (animationController.status != AnimationStatus.forward) {
-                  model.isToggled = !model.isToggled;
-                  model.index++;
-                  if (model.index >= introductionCardList.length) {
-                    animationController.forward();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const AuthScreen(),
-                      ),
-                    );
-                  }
-                  pageController.animateToPage(model.index,
-                      duration: const Duration(milliseconds: 500),
-                      curve: Curves.easeInOutQuad);
-                  animationController.forward();
-                }
-              },
-              child: Stack(
-                children: <Widget>[
-                  AnimatedCircle(
-                    animation: startAnimation,
-                    color: model.foreGroundColor,
-                    flip: 1.0,
-                    tween: Tween<double>(begin: 1.0, end: Global.radius),
+      body: _isLoading
+          ? const CircularProgressIndicator()
+          : Stack(
+              children: [
+                Container(
+                  color: model.isHalfWay
+                      ? model.foreGroundColor
+                      : model.backGroundColor,
+                  width: screenWidth / 2.0 - Global.radius / 2.0,
+                  height: double.infinity,
+                ),
+                Transform(
+                  transform: Matrix4.identity()
+                    ..translate(
+                      screenWidth / 2 - Global.radius / 2.0,
+                      screenHeight - Global.radius - Global.bottomPadding,
+                    ),
+                  child: GestureDetector(
+                    onTap: () {
+                      if (animationController.status !=
+                          AnimationStatus.forward) {
+                        model.isToggled = !model.isToggled;
+                        model.index++;
+                        if (model.index == 1) {
+                          chewieController?.videoPlayerController.play();
+                        }
+                        if (model.index >= introductionCardList.length) {
+                          chewieController?.videoPlayerController.pause();
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AuthScreen(),
+                            ),
+                          );
+                        }
+                        pageController.animateToPage(model.index,
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.easeInOutQuad);
+                        animationController.forward();
+                      }
+                    },
+                    child: Stack(
+                      children: <Widget>[
+                        AnimatedCircle(
+                          animation: startAnimation,
+                          color: model.foreGroundColor,
+                          flip: 1.0,
+                          tween: Tween<double>(begin: 1.0, end: Global.radius),
+                        ),
+                        AnimatedCircle(
+                          animation: endAnimation,
+                          color: model.backGroundColor,
+                          flip: -1.0,
+                          horizontalTween:
+                              Tween<double>(begin: 0, end: -Global.radius),
+                          horizontalAnimation: horizontalAnimation,
+                          tween: Tween<double>(begin: Global.radius, end: 1.0),
+                        ),
+                      ],
+                    ),
                   ),
-                  AnimatedCircle(
-                    animation: endAnimation,
-                    color: model.backGroundColor,
-                    flip: -1.0,
-                    horizontalTween:
-                        Tween<double>(begin: 0, end: -Global.radius),
-                    horizontalAnimation: horizontalAnimation,
-                    tween: Tween<double>(begin: Global.radius, end: 1.0),
+                ),
+                IgnorePointer(
+                  ignoring: true,
+                  child: PageView(
+                    controller: pageController,
+                    children: [
+                      const HomeCard(index: 0, color: textColor),
+                      Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.only(
+                            bottom: SizeConfig.heightMultiplier * 15),
+                        child: !videoPlayerController.value.isInitialized
+                            ? const CircularProgressIndicator()
+                            : Chewie(
+                                controller: chewieController!,
+                              ),
+                      )
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ),
-          IgnorePointer(
-            ignoring: true,
-            child: PageView.builder(
-              controller: pageController,
-              itemCount: introductionCardList.length,
-              itemBuilder: (context, index) {
-                return HomeCard(
-                  index: index,
-                  color: textColor,
-                );
-              },
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

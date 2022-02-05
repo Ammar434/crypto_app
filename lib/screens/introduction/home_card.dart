@@ -16,10 +16,10 @@ class HomeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: SizeConfig.isDesktop?MainAxisAlignment.start:MainAxisAlignment.center,
       children: [
         Container(
-          height: 250,
+          height: SizeConfig.heightMultiplier * 30,
           margin: EdgeInsets.symmetric(horizontal: defaultPadding * 3),
           decoration: ShapeDecoration(
             shape: RoundedRectangleBorder(

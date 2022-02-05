@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class FactureScreen extends StatelessWidget {
-  const FactureScreen({Key? key}) : super(key: key);
+class SpecialUser extends StatelessWidget {
+  const SpecialUser({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -9,7 +9,7 @@ class FactureScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title: const Text("Mes factures"),
+        title: const Text("VIP"),
       ),
     );
   }

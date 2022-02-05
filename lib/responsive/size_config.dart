@@ -13,21 +13,24 @@ class SizeConfig {
   static double widthMultiplier = 0;
   static double borderRadiusMultiplier = 0;
   static bool isPortrait = true;
-  static bool isMobilePortrait = false;
+  static bool isDesktop = false;
 
   void init(BoxConstraints constraints, Orientation orientation) {
     if (orientation == Orientation.portrait) {
       _screenWidth = constraints.maxWidth;
       _screenHeight = constraints.maxHeight;
       isPortrait = true;
-      if (_screenWidth < 450) {
-        isMobilePortrait = true;
+      if (_screenWidth > 600) {
+        isDesktop = true;
       }
     } else {
       _screenWidth = constraints.maxHeight;
       _screenHeight = constraints.maxWidth;
       isPortrait = false;
-      isMobilePortrait = false;
+      isDesktop = false;
+      if (_screenWidth > 600) {
+        isDesktop = true;
+      }
     }
 
     _blockWidth = _screenWidth / 100;

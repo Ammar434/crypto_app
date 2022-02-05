@@ -1,3 +1,4 @@
+import 'package:crypto_app/screens/authentication/forgot_password_screen.dart';
 import 'package:crypto_app/widget/text_field_input.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +25,7 @@ class LoginForm extends StatelessWidget {
               textEditingController: emailController,
               hintText: "Email",
               textInputType: TextInputType.emailAddress,
-              isSignUp: false,
+              isPassword: false,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
@@ -32,14 +33,20 @@ class LoginForm extends StatelessWidget {
                 textEditingController: pwdController,
                 hintText: 'Password',
                 textInputType: TextInputType.text,
-                isPass: true,
-                isSignUp: false,
+                isPassword: true,
               ),
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ForgotPasswordScreen(),
+                  ),
+                );
+              },
               child: Text(
-                "Forgot Password?",
+                "Mot de passe oublié?",
                 style: Theme.of(context).textTheme.headline2,
               ),
             ),

@@ -1,39 +1,46 @@
-import 'package:crypto_app/models/users.dart';
-import 'package:crypto_app/providers/user_provider.dart';
 import 'package:crypto_app/responsive/size_config.dart';
 import 'package:crypto_app/screens/academy/video_info.dart';
 import 'package:crypto_app/utils/colors.dart';
 import 'package:crypto_app/utils/constants.dart';
-import 'package:crypto_app/utils/utils.dart';
+import 'package:crypto_app/widget/snackbar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 
 class LevelCard extends StatelessWidget {
   const LevelCard({
     Key? key,
     required this.levelId,
+    required this.dayLeft,
+    required this.userLevel,
+    required this.levelName,
   }) : super(key: key);
   final int levelId;
+  final int dayLeft;
+  final int userLevel;
+  final String levelName;
+
   @override
   Widget build(BuildContext context) {
-    User user = Provider.of<UserProvider>(context).getUser;
     bool _isAccessible = false;
-    if (double.parse(user.level) >= levelId) {
+    if (userLevel >= levelId && dayLeft >= 0) {
       _isAccessible = true;
     }
 
     return InkWell(
       onTap: () {
-        if (_isAccessible) {
+        if (dayLeft < 0) {
+          showSnackBar(context, "Aucun abonnement trouvé");
+        } else if (_isAccessible) {
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => VideoInfo(level: levelId),
             ),
           );
+        } else {
+          showSnackBar(context,
+              "Niveau non débloqué veuillez prendre conctact avec notre équipe");
         }
-        else{showSnackBar(context, "Niveau non débloqué veuillez prendre conctact avec notre équipe");}
       },
       child: Container(
         width: SizeConfig.widthMultiplier * 40,
@@ -65,7 +72,7 @@ class LevelCard extends StatelessWidget {
               ),
             ),
             Text(
-              "Mini Groot",
+              levelName,
               style: TextStyle(
                 color: accentColor,
                 fontSize: SizeConfig.heightMultiplier * 2,

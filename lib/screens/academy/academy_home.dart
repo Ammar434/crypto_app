@@ -1,5 +1,8 @@
+import 'package:crypto_app/models/users.dart';
+import 'package:crypto_app/providers/user_provider.dart';
 import 'package:crypto_app/responsive/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'card_academy_presentation.dart';
 import 'level_card.dart';
@@ -14,6 +17,9 @@ class AcademyHome extends StatefulWidget {
 class _AcademyHomeState extends State<AcademyHome> {
   @override
   Widget build(BuildContext context) {
+    User user = Provider.of<UserProvider>(context).getUser;
+    int dayLeft = user.dayLeft;
+    int userLevel = int.parse(user.level);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -27,7 +33,9 @@ class _AcademyHomeState extends State<AcademyHome> {
         width: SizeConfig.widthMultiplier * 100,
         child: ListView(
           children: [
-            const CardAcademyPresentation(),
+            CardAcademyPresentation(
+              dayLeft: dayLeft,
+            ),
             Padding(
               padding: EdgeInsets.only(left: SizeConfig.widthMultiplier * 5),
               child: Text(
@@ -41,39 +49,48 @@ class _AcademyHomeState extends State<AcademyHome> {
             ),
             Wrap(
               alignment: WrapAlignment.center,
-              children: const [
+              children: [
                 LevelCard(
                   levelId: 0,
+                  dayLeft: dayLeft,
+                  userLevel: userLevel,
+                  levelName: "Mini Groot",
                 ),
                 LevelCard(
-                  levelId: 1,
+                  levelId: 0,
+                  dayLeft: dayLeft,
+                  userLevel: userLevel,
+                  levelName: "Mini Groot",
                 ),
                 LevelCard(
-                  levelId: 2,
+                  levelId: 0,
+                  dayLeft: dayLeft,
+                  userLevel: userLevel,
+                  levelName: "Mini Groot",
                 ),
                 LevelCard(
-                  levelId: 3,
+                  levelId: 0,
+                  dayLeft: dayLeft,
+                  userLevel: userLevel,
+                  levelName: "Mini Groot",
                 ),
                 LevelCard(
-                  levelId: 4,
+                  levelId: 0,
+                  dayLeft: dayLeft,
+                  userLevel: userLevel,
+                  levelName: "Mini Groot",
                 ),
                 LevelCard(
-                  levelId: 5,
+                  levelId: 0,
+                  dayLeft: dayLeft,
+                  userLevel: userLevel,
+                  levelName: "Mini Groot",
                 ),
                 LevelCard(
-                  levelId: 6,
-                ),
-                LevelCard(
-                  levelId: 7,
-                ),
-                LevelCard(
-                  levelId: 8,
-                ),
-                LevelCard(
-                  levelId: 9,
-                ),
-                LevelCard(
-                  levelId: 10,
+                  levelId: 0,
+                  dayLeft: dayLeft,
+                  userLevel: userLevel,
+                  levelName: "Mini Groot",
                 ),
               ],
             )

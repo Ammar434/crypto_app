@@ -2,7 +2,6 @@ import 'package:crypto_app/models/users.dart';
 import 'package:crypto_app/providers/user_provider.dart';
 import 'package:crypto_app/responsive/size_config.dart';
 import 'package:crypto_app/utils/colors.dart';
-import 'package:crypto_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,44 +23,32 @@ class InformationScreen extends StatelessWidget {
           horizontal: SizeConfig.widthMultiplier * 10,
           vertical: SizeConfig.heightMultiplier * 5,
         ),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(defaultRadius),
-            color: accentColor,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              InformationTileWidget(
-                title: 'Adresse e-mail',
-                text: user.email,
-              ),
-              InformationTileWidget(
-                title: 'Adresse MT4',
-                text: user.mt4Address,
-              ),
-              InformationTileWidget(
-                title: 'Adresse MT5',
-                text: user.mt5Address,
-              ),
-              InformationTileWidget(
-                title: "Jour restant à l'Academy",
-                text: user.dayLeft,
-              ),
-              InformationTileWidget(
-                title: "Adresse",
-                text: user.address,
-              ),
-              InformationTileWidget(
-                title: "Numero",
-                text: user.phoneNumber,
-              ),
-              InformationTileWidget(
-                title: "Joined",
-                text: user.dateJoined,
-              ),
-            ],
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            InformationTileWidget(
+              title: 'Adresse e-mail',
+              text: user.email,
+            ),
+            InformationTileWidget(
+              title: "Jour restant à l'Academy",
+              text: user.dayLeft >= 0
+                  ? user.dayLeft.toString()
+                  : "Aucun abonnement",
+            ),
+            InformationTileWidget(
+              title: "Adresse",
+              text: user.address,
+            ),
+            InformationTileWidget(
+              title: "Numero",
+              text: user.phoneNumber,
+            ),
+            InformationTileWidget(
+              title: "A rejoins le ",
+              text: user.dateJoined,
+            ),
+          ],
         ),
       ),
     );
@@ -102,7 +89,7 @@ class InformationTileWidget extends StatelessWidget {
             style: TextStyle(
               fontSize: SizeConfig.heightMultiplier * 2.2,
               fontWeight: FontWeight.w500,
-              color: Colors.white70,
+              color: accentColor,
             ),
           ),
           Container(

@@ -17,60 +17,70 @@ class PlaylistTileWidget extends StatelessWidget {
   final GestureTapCallback onTap;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        InkWell(
-          onTap: onTap,
-          child: Container(
-            width: SizeConfig.widthMultiplier * 25,
-            height: SizeConfig.widthMultiplier * 25,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(defaultRadius),
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: NetworkImage(
-                  videoModel.thumbnail,
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(defaultRadius),
+        border: Border.all(
+          color: accentColor,
+          width: SizeConfig.widthMultiplier / 2,
+        ),
+      ),
+      margin: EdgeInsets.symmetric(vertical: SizeConfig.heightMultiplier),
+      child: InkWell(
+        onTap: onTap,
+        child: Row(
+          children: [
+            Container(
+              margin: EdgeInsets.all(SizeConfig.heightMultiplier),
+              width: SizeConfig.widthMultiplier * 25,
+              height: SizeConfig.widthMultiplier * 25,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(defaultRadius),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                    videoModel.thumbnail,
+                  ),
+                ),
+              ),
+              child: Center(
+                child: FaIcon(
+                  FontAwesomeIcons.solidPlayCircle,
+                  size: SizeConfig.widthMultiplier * 8,
+                  color: textColor,
                 ),
               ),
             ),
-            child: Center(
-              child: FaIcon(
-                FontAwesomeIcons.solidPlayCircle,
-                size: SizeConfig.widthMultiplier * 8,
-                color: textColor,
-              ),
+            SizedBox(
+              width: SizeConfig.widthMultiplier * 5,
             ),
-          ),
-        ),
-        SizedBox(
-          width: SizeConfig.widthMultiplier * 5,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Text(
-              videoModel.title,
-              style: TextStyle(
-                  color: backgroundColor,
-                  fontWeight: FontWeight.w600,
-                  fontSize: SizeConfig.heightMultiplier * 2.2),
-            ),
-            Text(
-              videoModel.time,
-              style: const TextStyle(
-                color: hintColor,
-              ),
-            ),
-            Text(
-              videoModel.description,
-              style: const TextStyle(
-                color: hintColor,
-              ),
-            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  videoModel.title,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: SizeConfig.heightMultiplier * 2.2),
+                ),
+                Text(
+                  videoModel.time,
+                  style: const TextStyle(
+                    color: hintColor,
+                  ),
+                ),
+                Text(
+                  videoModel.description,
+                  style: const TextStyle(
+                    color: hintColor,
+                  ),
+                ),
+              ],
+            )
           ],
-        )
-      ],
+        ),
+      ),
     );
   }
 }

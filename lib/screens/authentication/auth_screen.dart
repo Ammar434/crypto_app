@@ -8,7 +8,7 @@ import 'package:crypto_app/ressources/auth_method.dart';
 import 'package:crypto_app/screens/authentication/sign_up_form.dart';
 import 'package:crypto_app/utils/colors.dart';
 import 'package:crypto_app/utils/constants.dart';
-import 'package:crypto_app/utils/utils.dart';
+import 'package:crypto_app/widget/snackbar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
