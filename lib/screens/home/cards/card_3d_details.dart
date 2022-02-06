@@ -90,6 +90,7 @@ class CardsDetails extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (context) => BuyScreen(
                       packName: card.title,
+                      packPrice: card.price,
                     ),
                   ),
                 );

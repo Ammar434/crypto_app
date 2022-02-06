@@ -11,11 +11,15 @@ import 'package:flutter/material.dart';
 
 class BuyStatusScreen extends StatefulWidget {
   const BuyStatusScreen(
-      {Key? key, required this.packName, required this.selectedValue})
+      {Key? key,
+      required this.packName,
+      required this.selectedValue,
+      required this.packPrice})
       : super(key: key);
 
   final String packName;
   final String selectedValue;
+  final String packPrice;
 
   @override
   _BuyStatusScreenState createState() => _BuyStatusScreenState();
@@ -26,7 +30,7 @@ class _BuyStatusScreenState extends State<BuyStatusScreen> {
   PaymentCryptoModel? paymentCryptoModel;
 
   Future<void> updateData() async {
-    await paymentCrypto.createOrder();
+    await paymentCrypto.createOrder(widget.packPrice);
     paymentCryptoModel = (await paymentCrypto.getOrderStatus())!;
     Timer.periodic(
       const Duration(seconds: 10),

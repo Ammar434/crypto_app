@@ -9,7 +9,7 @@ class PaymentCrypto {
   final String _url = 'https://api-sandbox.coingate.com/v2/orders';
   final String _apiKey = "ue1qW8DUxB7p6pkNrfcdvVKHQZ8xbk8ts-M-yypo";
   static int _orderId = -1;
-  Future<String> createOrder() async {
+  Future<String> createOrder(String price) async {
     String res = "Some error occured";
     try {
       final int? orderNum = await QueryFromFirebase().getUserNumberPackBuy();
@@ -21,7 +21,7 @@ class PaymentCrypto {
         },
         body: <String, String>{
           'title': 'Order #$orderNum',
-          'price_amount': '2000',
+          'price_amount': price,
           'price_currency': 'EUR',
           'receive_currency': 'USDT',
           'order_id': '$orderNum',
