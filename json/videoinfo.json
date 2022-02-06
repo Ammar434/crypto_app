@@ -1,0 +1,41 @@
+
+  {
+    "niveau":
+      {
+        "0" : {
+          "video": [
+          {
+            "title": "Squat and Walk",
+            "time": "45 seconds",
+            "thumbnail": "assets/squat1.jpg",
+            "videoUrl": "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4",
+            "description": "formation crypto 1"
+          },
+          {
+            "title": "Plie Squat and Heel Raises",
+            "time": "55 seconds",
+            "thumbnail": "assets/squat2.jpg",
+            "videoUrl": "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4",
+            "description": "formation crypto 2"
+          },
+          {
+            "title": "Squat Kickback",
+            "time": "60 seconds",
+            "thumbnail": "assets/squat3.jpg",
+            "videoUrl": "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4",
+            "description": "formation crypto 3"
+          },
+          {
+            "title": "Squat with Side Leg Lift",
+            "time": "120 seconds",
+            "thumbnail": "assets/squat4.jpg",
+            "videoUrl": "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4",
+            "description": "formation crypto 4"
+          }
+        ],
+          "levelName" : "Apprendre les base"
+        }
+
+      }
+
+  }
