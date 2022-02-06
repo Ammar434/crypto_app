@@ -7,7 +7,7 @@ class PaymentCryptoModel {
   final String receiveAmount;
   final String paymentUrl;
   final String priceAmount;
-  final String receive_currency;
+  final String receiveCurrency;
 
   PaymentCryptoModel({
     required this.id,
@@ -16,7 +16,7 @@ class PaymentCryptoModel {
     required this.receiveAmount,
     required this.paymentUrl,
     required this.priceAmount,
-    required this.receive_currency,
+    required this.receiveCurrency,
   });
   static PaymentCryptoModel fromApi(String response) {
     var data = json.decode(response.toString());
@@ -27,7 +27,7 @@ class PaymentCryptoModel {
       status: data["status"],
       receiveAmount: data["receive_amount"],
       priceAmount: data['price_amount'],
-      receive_currency: data['receive_currency'],
+      receiveCurrency: data['receive_currency'],
     );
   }
 }

@@ -1,9 +1,9 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:crypto_app/responsive/size_config.dart';
-import 'package:crypto_app/ressources/launch_url.dart';
+import 'package:crypto_app/screens/academy/academy_buy_subscription.dart';
 import 'package:crypto_app/utils/colors.dart';
 import 'package:crypto_app/utils/constants.dart';
-import 'package:crypto_app/utils/url.dart';
+import 'package:crypto_app/widget/snackbar_widget.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -14,6 +14,20 @@ class CardAcademyIfUserNotSubscribe extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void onTap() {
+      if (kIsWeb) {
+        showSnackBar(context,
+            "Nous ne prennons pas d'abonnement sur cette application.");
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const AcademyBuySubscription(),
+          ),
+        );
+      }
+    }
+
     return Container(
       margin: EdgeInsets.all(defaultPadding),
       height: SizeConfig.heightMultiplier * 30,
@@ -46,9 +60,7 @@ class CardAcademyIfUserNotSubscribe extends StatelessWidget {
           ),
         ),
         child: InkWell(
-          onTap: () {
-            launchInBrowser(lifestyleAcademyPresentationVideo);
-          },
+          onTap: onTap,
           child: Padding(
             padding: EdgeInsets.all(SizeConfig.widthMultiplier * 5),
             child: Column(
@@ -65,35 +77,8 @@ class CardAcademyIfUserNotSubscribe extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: defaultPadding / 2,
-                ),
-                DefaultTextStyle(
-                  style: TextStyle(
-                    fontSize: SizeConfig.heightMultiplier * 3,
-                    color: Colors.white,
-                    shadows: const [
-                      Shadow(
-                        blurRadius: 2.0,
-                        color: Colors.white,
-                        offset: Offset(0, 0),
-                      ),
-                    ],
-                  ),
-                  child: SizedBox(
-                    height: SizeConfig.heightMultiplier * 5,
-                    child: AnimatedTextKit(
-                      repeatForever: true,
-                      animatedTexts: [
-                        FadeAnimatedText('Texte '),
-                        FadeAnimatedText('Texte a rajouter!!'),
-                        FadeAnimatedText('Texte a  rajouter !!!'),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
                   width: SizeConfig.widthMultiplier * 40,
-                  height: SizeConfig.widthMultiplier * 20,
+                  height: SizeConfig.widthMultiplier * 30,
                   child: Lottie.network(
                     "https://assets9.lottiefiles.com/packages/lf20_bGcAek.json",
                   ),

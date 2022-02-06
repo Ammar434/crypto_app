@@ -6,6 +6,7 @@ import 'package:crypto_app/screens/call_history/call_history_screen.dart';
 import 'package:crypto_app/screens/evolution/evolution_screen.dart';
 import 'package:crypto_app/screens/informations/information_screen.dart';
 import 'package:crypto_app/screens/level/niveau_screen.dart';
+import 'package:crypto_app/screens/product/product_screen.dart';
 import 'package:crypto_app/screens/setting/setting_screen.dart';
 import 'package:crypto_app/screens/special_user/special_user.dart';
 import 'package:crypto_app/utils/colors.dart';
@@ -54,6 +55,18 @@ class MenuScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => const InformationScreen(),
+                    ),
+                  );
+                },
+              ),
+              DrawerItem(
+                text: "Produit",
+                iconData: FontAwesomeIcons.productHunt,
+                press: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ProductScreen(),
                     ),
                   );
                 },

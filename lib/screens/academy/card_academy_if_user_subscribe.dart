@@ -1,4 +1,3 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:crypto_app/responsive/size_config.dart';
 import 'package:crypto_app/ressources/launch_url.dart';
 import 'package:crypto_app/utils/colors.dart';
@@ -52,57 +51,25 @@ class CardAcademyIfUserSubscribe extends StatelessWidget {
           },
           child: Padding(
             padding: EdgeInsets.all(SizeConfig.widthMultiplier * 5),
-            child: Row(
+            child: Stack(
               children: [
-                Expanded(
-                  child: Lottie.network(
-                    "https://assets8.lottiefiles.com/temporary_files/PH5YkW.json",
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: SizedBox(
+                    height: SizeConfig.widthMultiplier * 40,
+                    child: Lottie.network(
+                      "https://assets8.lottiefiles.com/temporary_files/PH5YkW.json",
+                    ),
                   ),
                 ),
-                Expanded(
-                  flex: 2,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      FittedBox(
-                        child: Text(
-                          "Profiter de l'Academy",
-                          style: TextStyle(
-                            fontSize: SizeConfig.heightMultiplier * 3,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: defaultPadding / 2,
-                      ),
-                      DefaultTextStyle(
-                        style: TextStyle(
-                          fontSize: SizeConfig.heightMultiplier * 3,
-                          color: Colors.white,
-                          shadows: const [
-                            Shadow(
-                              blurRadius: 2.0,
-                              color: Colors.white,
-                              offset: Offset(0, 0),
-                            ),
-                          ],
-                        ),
-                        child: SizedBox(
-                          height: SizeConfig.heightMultiplier * 10,
-                          child: AnimatedTextKit(
-                            repeatForever: true,
-                            animatedTexts: [
-                              FadeAnimatedText('Il vous'),
-                              FadeAnimatedText('Il vous reste'),
-                              FadeAnimatedText(
-                                  'Il vous reste ' + dayLeft! + " jours"),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Text(
+                    'Il vous reste ' + dayLeft! + " jours",
+                    style: TextStyle(
+                      fontSize: SizeConfig.heightMultiplier * 3,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                 ),
               ],

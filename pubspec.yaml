@@ -38,7 +38,6 @@ dependencies:
   flutter_zoom_drawer: ^2.2.2
   font_awesome_flutter: ^9.2.0
   video_player: ^2.1.1
-  animated_text_kit: ^4.2.1
   chewie: ^1.2.2
   url_launcher: ^6.0.18
   full_screen_image_null_safe: ^2.0.0

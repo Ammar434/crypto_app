@@ -91,6 +91,7 @@ class CardsDetails extends StatelessWidget {
                     builder: (context) => BuyScreen(
                       packName: card.title,
                       packPrice: card.price,
+                      daySubscriptionOffer: card.gratuiteAcademy,
                     ),
                   ),
                 );

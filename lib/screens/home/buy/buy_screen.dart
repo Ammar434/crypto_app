@@ -9,10 +9,15 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
 class BuyScreen extends StatefulWidget {
-  const BuyScreen({Key? key, required this.packName, required this.packPrice})
+  const BuyScreen(
+      {Key? key,
+      required this.packName,
+      required this.packPrice,
+      required this.daySubscriptionOffer})
       : super(key: key);
   final String packName;
   final String packPrice;
+  final String daySubscriptionOffer;
 
   @override
   State<BuyScreen> createState() => _BuyScreenState();
@@ -144,6 +149,7 @@ class _BuyScreenState extends State<BuyScreen> {
                           packName: widget.packName,
                           selectedValue: selectedValue!,
                           packPrice: widget.packPrice,
+                          daySubscriptionOffer: widget.daySubscriptionOffer,
                         ),
                       ),
                     );

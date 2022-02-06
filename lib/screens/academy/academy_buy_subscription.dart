@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:crypto_app/models/payment_crypto_model.dart';
+import 'package:crypto_app/providers/user_provider.dart';
 import 'package:crypto_app/responsive/size_config.dart';
 import 'package:crypto_app/ressources/launch_url.dart';
 import 'package:crypto_app/ressources/query_method.dart';
@@ -10,30 +11,21 @@ import 'package:crypto_app/services/subscription/subscription.dart';
 import 'package:crypto_app/widget/rounded_button.dart';
 import 'package:flutter/material.dart';
 
-class BuyStatusScreen extends StatefulWidget {
-  const BuyStatusScreen({
+class AcademyBuySubscription extends StatefulWidget {
+  const AcademyBuySubscription({
     Key? key,
-    required this.packName,
-    required this.selectedValue,
-    required this.packPrice,
-    required this.daySubscriptionOffer,
   }) : super(key: key);
 
-  final String packName;
-  final String selectedValue;
-  final String packPrice;
-  final String daySubscriptionOffer;
-
   @override
-  _BuyStatusScreenState createState() => _BuyStatusScreenState();
+  _AcademyBuySubscriptionState createState() => _AcademyBuySubscriptionState();
 }
 
-class _BuyStatusScreenState extends State<BuyStatusScreen> {
+class _AcademyBuySubscriptionState extends State<AcademyBuySubscription> {
   final PaymentCrypto paymentCrypto = PaymentCrypto();
   PaymentCryptoModel? paymentCryptoModel;
 
   Future<void> updateData() async {
-    await paymentCrypto.createOrder(widget.packPrice);
+    await paymentCrypto.createOrder("100");
     paymentCryptoModel = (await paymentCrypto.getOrderStatus())!;
     Timer.periodic(
       const Duration(seconds: 10),
@@ -44,14 +36,12 @@ class _BuyStatusScreenState extends State<BuyStatusScreen> {
         );
         if (paymentCryptoModel?.status == "paid") {
           timer.cancel();
-          await QueryFromFirebase().updatePropFirm(
-            widget.packName,
-            widget.selectedValue,
+          await QueryFromFirebase().buySubscription(
             paymentCryptoModel!.id.toString(),
           );
           await QueryFromFirebase().updateUserNumberPackBuy();
-          await Subscription()
-              .updateSubscription(int.parse(widget.daySubscriptionOffer));
+          await Subscription().updateSubscription(32);
+          UserProvider().refreshUser();
         }
       },
     );

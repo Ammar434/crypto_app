@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:crypto_app/models/users.dart" as model;
+import 'package:crypto_app/providers/user_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
@@ -139,6 +140,8 @@ class AuthMethods {
             {'address': address},
           );
         }
+        UserProvider().refreshUser();
+
         res = "success";
       } else {
         res = "Merci d'entrer une adresse";
@@ -159,6 +162,8 @@ class AuthMethods {
             {'phoneNumber': phoneNumber},
           );
         }
+        UserProvider().refreshUser();
+
         res = "success";
       } else {
         res = "Merci d'entrer un numéro";

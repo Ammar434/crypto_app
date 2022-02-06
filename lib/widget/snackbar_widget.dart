@@ -18,7 +18,7 @@ showSnackBar(BuildContext context, String content) {
         borderRadius: BorderRadius.circular(defaultRadius),
       ),
       backgroundColor: accentColor,
-      duration: const Duration(milliseconds: 750),
+      duration: const Duration(seconds: 10),
     ),
   );
 }

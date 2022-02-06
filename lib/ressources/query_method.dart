@@ -57,6 +57,34 @@ class QueryFromFirebase {
     return res;
   }
 
+  Future<String> buySubscription(String transactionId) async {
+    String res = "Some error Occurred";
+    String? email = _auth.currentUser?.email;
+    DateTime dateToday = Timestamp.now().toDate();
+    String date = DateFormat('dd-MM-yyyy').format(dateToday);
+
+    try {
+      if (email != null) {
+        await _firestore
+            .collection("users")
+            .doc(email)
+            .collection("academySubscription")
+            .add(
+          {
+            "dateSouscription": date,
+            "transactionId": transactionId,
+          },
+        );
+        res = "success";
+      } else {
+        res = "Merci de refaire l'operation";
+      }
+    } catch (err) {
+      return err.toString();
+    }
+    return res;
+  }
+
   Future<String> updateUserNumberPackBuy() async {
     String res = "Some error Occurred";
     String? email = _auth.currentUser?.email;
@@ -68,7 +96,6 @@ class QueryFromFirebase {
             'numberPackBuy': FieldValue.increment(1),
           },
         );
-
         res = "success";
       } else {
         res = "Merci de refaire l'operation";
@@ -80,7 +107,6 @@ class QueryFromFirebase {
   }
 
   Future<int?> getUserNumberPackBuy() async {
-    String res = "Some error Occurred";
     String? email = _auth.currentUser?.email;
     DocumentSnapshot documentSnapshot;
     try {
@@ -88,14 +114,10 @@ class QueryFromFirebase {
         documentSnapshot =
             await _firestore.collection("users").doc(email).get();
 
-        res = "success";
         return documentSnapshot['numberPackBuy'];
-      } else {
-        res = "Merci de refaire l'operation";
-      }
+      } else {}
     } catch (err) {
-      print(err.toString());
+      return -1;
     }
-    ;
   }
 }
